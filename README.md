@@ -1,3 +1,3 @@
 # 1D-Dial-A-Ride-Optimization
 
-A program that takes in a list of requests (containing desired pickup time, starting position, and drop-off position) on a 1-Dimensional plane and returns the optimal, maximized path for a driver to route accordingly.
+Efficient routing algorithms that optimize service and minimize drivers across a 1D plane. Other features (rideshare, dynamic pickup times, busroutes) have also been accounted for. The 2D version has since been implemented in a Dial a Ride Website for the Vermont department of transportation.
