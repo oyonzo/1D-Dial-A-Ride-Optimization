@@ -35,16 +35,27 @@ public class Request implements Comparable<Request> {
 	}
 
 	// calculating the distance between two points
-	double dist(double[] a, double[] b) {
-		double sum = Math.pow((a[1] - b[1]), 2) + Math.pow((a[2] - b[2]), 2);
+	public double dist(double[] a, double[] b) {
+		double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);
 		return Math.sqrt(sum);
 	}
 
 	// f= w1x1 * w2x2 * w3x3
-	public void setf(double weight1, double weight2, double weight3, double input1, double input2, double input3) {
-		f_val = weight1 * input1 + weight2 * input2 + weight3 * input3;
+	public void setf(double weight1, double weight2, double weight3, List<Request> rl) {
+		f_val = weight1 * this.getX1() + weight2 * this.getX2() + weight3 * this.getX3(rl);
 	}
 
+	public double getX1() {
+		double[] origin = new double[2];
+		origin[0] = 0;
+		origin[1] = 0;
+		return this.dist(origin, this.startPos);
+	}
+	
+	public double getX2() {
+		return this.pickTime;
+	}
+	
 	public double getX3(List<Request> rl) {
 		double min = Double.MAX_VALUE;
 		for (Request r : rl) {
@@ -78,7 +89,7 @@ public class Request implements Comparable<Request> {
 	}
 
 	public String toString() {
-		return "StartPos: " + startPos + ", finishPos: " + finishPos + "; (" + pickTime + "," + finishTime + "); "
+		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos) + "; (" + pickTime + "," + finishTime + "); "
 				+ "f-value: " + f_val;
 	}
 
