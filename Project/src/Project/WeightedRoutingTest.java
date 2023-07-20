@@ -24,6 +24,7 @@ public class WeightedRoutingTest {
     }
 	
 	public void weightedRouting(List<Request> requestList, double t, double[] c) {
+		List<Request> res = new ArrayList<Request>();
         // Sort the requestList in ascending order of f function value
         Collections.sort(requestList, Comparator.comparingDouble(request -> request.f_val));
 
@@ -38,7 +39,7 @@ public class WeightedRoutingTest {
                     iterator.remove();
                 } else {
                     // Choose request with smallest f value that does not overlap any previously chosen request
-                    System.out.println("Serving request: " + request.toString()); // print the request being served
+                	res.add(request);
                     t = request.finishTime; // set current time to drop-off time of the request
                     c = request.finishPos; // set current location to drop-off location of the request
                     iterator.remove(); // remove this request from list as it's served
@@ -46,6 +47,7 @@ public class WeightedRoutingTest {
                 }
             }
         }
+        System.out.println(res.size()); // print the number of requests being served
     }
 	
 	public static double[] randomWeightGenerator() {
