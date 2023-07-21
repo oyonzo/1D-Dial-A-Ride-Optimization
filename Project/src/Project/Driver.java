@@ -11,9 +11,31 @@ public class Driver extends Point {
     private static int speed = 1;
     private double currentTime = 0;
 
+<<<<<<< HEAD
     public Driver(double[] position) {
         this.schedule = new ArrayList<>();
         this.position = position;
+=======
+    /**
+     * @return creates a driver at a random location
+     */
+    public Driver newRandDriver() {
+        Driver d = new Driver();
+        d.location = Request.randPoint();
+        return d;
+    }
+
+    /**
+     * @param numDrivers the number of drivers to be generated
+     * @return a list of drivers of size numDrivers 
+     */
+    public List<Driver> generateRandDrivers(int numDrivers) {
+        List<Driver> drivers = new ArrayList<Driver>();
+            for(int i = 0; i < numDrivers; i++;){
+                drivers.add(newRandDriver());
+            }
+            return drivers;
+>>>>>>> e8c7fde (Added method to generate a list of random drivers)
     }
 
     public double getCurrentTime() {
