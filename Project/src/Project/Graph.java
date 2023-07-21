@@ -1,5 +1,7 @@
 package Project;
 
+import java.util.Random;
+
 public class Graph {
 
 	static int WIDTH = 100;
@@ -24,11 +26,27 @@ public class Graph {
 	 * An Array containing the coordinates of the point [x,y]
 	 */
 	static double[] randPoint() {
-		double x = Request.randDouble(WIDTH, 0);
-		double y = Request.randDouble(HEIGHT, 0);
+		double x = Graph.randDouble(WIDTH, 0);
+		double y = Graph.randDouble(HEIGHT, 0);
 
 		double[] point = new double[] { x, y };
 		return point;
+	}
+
+	/*
+	 * Generate a random double within a range
+	 * 
+	 * Args:
+	 * rangeMax: Exclusive upper bound
+	 * rangeMin: Inclusive lower bound
+	 * 
+	 * Returns:
+	 * A random double
+	 */
+	static double randDouble(double rangeMax, double rangeMin) {
+		Random r = new Random();
+		double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+		return randomValue;
 	}
 
 }
