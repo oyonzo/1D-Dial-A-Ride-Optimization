@@ -8,11 +8,10 @@ import java.io.IOException;
 
 import Project.Request;
 import Project.LinearRequest;
-import Project.Driver;
 
 public class newnewMain {
     public static int iterations;
-    static List<ArrayList<Request>> combinations = new ArrayList<ArrayList<Request>>();
+    public static List<ArrayList<Request>> combinations = new ArrayList<ArrayList<Request>>();
     public static int index = 0;
     public static int sumSizeOPT = 0;
     public static int sumSizeALG = 0;
@@ -109,71 +108,6 @@ public class newnewMain {
                     + "\nThe Max Size from Share Ride: " + shareSize);
         }
 
-    }
-
-    // make a list of lists of requests in every possible permutation
-    public static void permute(List<Request> lrl, int k) {
-        if (k == lrl.size()) {
-            ArrayList<Request> indivSeq = new ArrayList<Request>();
-            for (int i = 0; i < lrl.size(); i++) {
-                indivSeq.add(lrl.get(i));
-                // System.out.print(" [" + lrl.get(i).toString() + "] ");
-
-            }
-            combinations.add(index, indivSeq);
-            index++;
-            // System.out.println();
-        } else {
-            // recursively swapping one thing each time
-            for (int i = k; i < lrl.size(); i++) {
-                Collections.swap(lrl, i, k);
-                permute(lrl, k + 1);
-                Collections.swap(lrl, i, k);
-            }
-        }
-
-    }
-
-    // this is way harder for multiple drivers
-    public static List<Request> getOptimalforDriver(List<Request> lrl, Driver driver) {
-
-        // gives us a list of list of requests, in every combination possible
-        permute(lrl, 0);
-        // j is each set of requests
-        for (int j = 0; j < combinations.size(); j++) {
-            double time = 0;
-            // TODO think of what origins should be because we now have multiple drivers
-            // with different origins
-            double[] origin = driver.location
-            // i is a request in a set
-            for (int i = 0; i < combinations.get(j).size(); i++) {
-                if (combinations.get(j).get(i).pickTime < time) {
-                    combinations.get(j).remove(i);
-                    i--;
-                    continue;
-                }
-                if (time + Math.abs(combinations.get(j).get(i).startPos - origin) > combinations.get(j)
-                        .get(i).pickTime) {
-                    combinations.get(j).remove(i);
-                    i--;
-                }
-                time = combinations.get(j).get(i).finishTime;
-                origin = combinations.get(j).get(i).finishPos;
-            }
-        }
-
-        int maxIndex = -1;
-        int maxSize = Integer.MIN_VALUE;
-
-        for (int i = 0; i < combinations.size(); i++) {
-            List<LinearRequest> l = combinations.get(i);
-            if (l.size() > maxSize) {
-                maxSize = l.size();
-                maxIndex = i;
-            }
-        }
-
-        return combinations.get(maxIndex);
     }
 
 }
