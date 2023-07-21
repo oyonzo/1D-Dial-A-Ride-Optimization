@@ -3,44 +3,41 @@ import java.util.*;
 import java.util.Collections;
 import java.util.Comparator;
 
-// where do drivers start?
-// how big is our metric space?
-// scan in #drivers and #requests
-
 public class earliest {
-    
-    public static List<Request> requestList = new ArrayList<Request>();
-    public static List<Request> unassignedRequests = new ArrayList<Request>();
-    public static List<Integer> sorted = new ArrayList<>();
+    public static List<Request> requests = new ArrayList<Request>();
+    //public static LinkedList<Request> linkedRequests = new LinkedList<Request>();
+    //public static List<Request> unassignedRequests = new ArrayList<Request>();
+    //public static List<Integer> sorted = new ArrayList<>();
     public static int numDrivers;
-    public static double pickupTime = Request.pickTime;
-    public static int n = requestList.size();
+    public static int n = requests.size();
     public static int threshold = 1;
     public static double[] startPos, finishPos;
-    double pickTime;
-    Request request = new Request(startPos, finishPos, pickTime);
+    public static double pickTime;
+    public static Iterator<Request> nextRequest = requests.iterator();
 
-    // Sorts requests by increasing pickup time, creates drivers
-    public static void assign(List<Request> requestList) {
-        Collections.sort(requestList, Comparator.comparingDouble(r -> Request.pickTime));
-
+    // Adds requests to requestList, sorts requests by increasing pickup time, creates drivers
+    public static void assign(List<Request> requests) {
+        requests = Request.createRequests();
+        Request request = new Request(startPos, finishPos, pickTime);
+        Collections.sort(requests, Comparator.comparingDouble(r -> r.pickTime));
         List<Driver> drivers = new ArrayList<>();
+        double[] position = Driver.generateRandomPosition();
         
+        // creates numDrivers drivers with random starting position
         for (int i = 0; i < numDrivers; i++) {
-            drivers.add(new Driver());
+            drivers.add(new Driver(position));
         }
 
-        for (Request request : requestList) {
+        for (int i = 0; i < n; i++) {
             if (!assignRequest(request, drivers, n / numDrivers + threshold)) {
                 assignClosestDriver(request, drivers);
             }
         }
-
     }
     
     // determines if driver can add an additional request
     // @return true if it can, false otherwise
-    private static boolean assignRequest(Requests request, List<Driver> drivers, int maxAssigned) {
+    private static boolean assignRequest(Request request, List<Driver> drivers, int maxAssigned) {
         for (Driver driver : drivers) {
             if (driver.schedule.size() < maxAssigned) {
                 driver.schedule.add(request);
@@ -55,54 +52,33 @@ public class earliest {
         Driver closestDriver = null;
         double closestDist = Double.MAX_VALUE;
         for (Driver driver : drivers) {
-            double dist = getDistance()
+            double distance = request.getX3(requests);
+            if (distance < closestDist) {
+                closestDriver = driver;
+                closestDist = distance;
+            }
+        }
+        if (closestDriver != null) {
+            closestDriver.schedule.add(request);
         }
     }
-
-    // @return current location of a driver (after serving a request)
-    // ? put in driver class ?
-    public static double[] getDriverLocation (Request request) {
-        return request.finishPos;
-    }
-
-    // @return pikcup location of request
-    private static double[] getRequestLocation (Request request) {
-        return request.startPos;
-    }
-    /*public double getX3(List<Request> rl) {
-		double min = Double.MAX_VALUE;
-		for(Request r : rl) {
-			if(this.equals(r)) continue;
-			
-			double distToNext = dist(r.startPos,this.finishPos);
-			if(distToNext < min) {
-				min = distToNext;
-			}
-		}
-		return min;
-	}*/
 
     // Compares the time required to travel from the Driver's currLocation to the pickup location with 
     // the time remaining until the pickup time
     // @return true if there is enough time, false otherwise
-    private static boolean hasEnoughTime (Driver driver, Requests request) {
-        return (getDistance(getDriverLocation(driver), getRequestLocation(request)) <= pickupTime);
+    private static boolean hasEnoughTime (Driver driver, Request request) {
+        return (request.dist(driver.getPosition(), request.finishPos) <= request.getX2());
     }
 
-    private static Driver getAssignedDriver(Requests request, List<Driver> drivers) {
+    // @return driver of specified request
+    private static Driver getAssignedDriver(Request request, List<Driver> drivers) {
         for (Driver driver : drivers) {
             if (driver.schedule.contains(request)) {
                 return driver;
             }
         }
         return null;
-    }
-
-    //calculating the distance between two points
-    private static double getDistance(double[] a, double[] b) {
-        double sum = Math.pow((a[1]-b[1]),2)  +  Math.pow((a[2]-b[2]),2);
-		return Math.sqrt(sum);
-    }    
+    } 
 }
 
 
