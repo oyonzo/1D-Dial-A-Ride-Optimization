@@ -23,7 +23,7 @@ public class Driver extends Point{
     	this.position = new_position;
     }
     
-    public double[] generateRandomPosition() {
+    public static double[] generateRandomPosition() {
     	double[] res = new double[2];
 		Random rand = new Random();
 
@@ -41,7 +41,7 @@ public class Driver extends Point{
     	origin[0] = 0;
     	origin[1] = 0;
     	Driver test = new Driver(origin);
-    	System.out.println(Arrays.toString(test.generateRandomPosition()));
+    	System.out.println(Arrays.toString(Driver.generateRandomPosition()));
     }
     
 }
