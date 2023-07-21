@@ -24,7 +24,7 @@ public class Request implements Comparable<Request> {
 		this.startPos = s;
 		this.finishPos = f;
 		this.pickTime = pt;
-		this.weight = dist(s, f) / speed;
+		this.weight = Graph.dist(s, f) / speed;
 		this.finishTime = weight + pickTime;
 		this.f_val = 0;
 	}
@@ -45,7 +45,7 @@ public class Request implements Comparable<Request> {
 		double[] origin = new double[2];
 		origin[0] = 0;
 		origin[1] = 0;
-		return this.dist(origin, this.startPos);
+		return Graph.dist(origin, this.startPos);
 	}
 
 	public double getX2() {
@@ -91,22 +91,6 @@ public class Request implements Comparable<Request> {
 	}
 
 	/*
-	 * Generate a random double within a range
-	 * 
-	 * Args:
-	 * rangeMax: Exclusive upper bound
-	 * rangeMin: Inclusive lower bound
-	 * 
-	 * Returns:
-	 * A random double
-	 */
-	static double randDouble(double rangeMax, double rangeMin) {
-		Random r = new Random();
-		double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
-		return randomValue;
-	}
-
-	/*
 	 * Generates a random request in the metric space
 	 * 
 	 * Returns:
@@ -115,7 +99,7 @@ public class Request implements Comparable<Request> {
 	public static Request createRandomRequest() {
 		double[] s = Graph.randPoint();
 		double[] f = Graph.randPoint();
-		double pt = randDouble(Graph.TLIMIT, 0);
+		double pt = Graph.randDouble(Graph.TLIMIT, 0);
 
 		Request request = new Request(s, f, pt);
 
