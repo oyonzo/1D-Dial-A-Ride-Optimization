@@ -28,10 +28,11 @@ public class Driver extends Graph {
 
     /**
      * @param numDrivers the number of drivers to be generated
-     * @return a list of drivers of size numDrivers 
+     * @return a list of drivers of size numDrivers
      */
     public List<Driver> generateRandDrivers(int numDrivers) {
         List<Driver> drivers = new ArrayList<Driver>();
+
             for(int i = 0; i < numDrivers; i++){
                 drivers.add(newRandDriver());
             }
@@ -69,7 +70,7 @@ public class Driver extends Graph {
     // }
 
     public static List<Request> getOptimalforDriver(List<Request> lrl, Driver driver) {
-    
+
         // gives us a list of list of requests, in every combination possible
         Request.permute(lrl, 0);
         // j is each set of requests
@@ -85,7 +86,8 @@ public class Driver extends Graph {
                     i--;
                     continue;
                 }
-                if (time + Graph.dist(newnewMain.combinations.get(j).get(i).startPos,origin) > newnewMain.combinations.get(j)
+                if (time + Graph.dist(newnewMain.combinations.get(j).get(i).startPos, origin) > newnewMain.combinations
+                        .get(j)
                         .get(i).pickTime) {
                     newnewMain.combinations.get(j).remove(i);
                     i--;
@@ -94,10 +96,10 @@ public class Driver extends Graph {
                 origin = newnewMain.combinations.get(j).get(i).finishPos;
             }
         }
-    
+
         int maxIndex = -1;
         int maxSize = Integer.MIN_VALUE;
-    
+
         for (int i = 0; i < newnewMain.combinations.size(); i++) {
             List<Request> l = newnewMain.combinations.get(i);
             if (l.size() > maxSize) {
@@ -105,7 +107,7 @@ public class Driver extends Graph {
                 maxIndex = i;
             }
         }
-    
+
         return newnewMain.combinations.get(maxIndex);
     }
 

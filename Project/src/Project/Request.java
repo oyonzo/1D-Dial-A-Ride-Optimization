@@ -16,7 +16,7 @@ public class Request implements Comparable<Request> {
 	public double pickTime;
 	double weight; // given in time
 	public double finishTime;
-	double speed = 1;
+	static double speed = 1;
 	double f_val;
 	// declare the Height and Width of our metric space
 
@@ -26,9 +26,14 @@ public class Request implements Comparable<Request> {
 		this.startPos = s;
 		this.finishPos = f;
 		this.pickTime = pt;
-		this.weight = Graph.dist(s, f) / speed;
+		this.weight = weight(s, f);
 		this.finishTime = weight + pickTime;
 		this.f_val = 0;
+	}
+
+	public static double weight(double[] s, double[] f) {
+		double rweight = Graph.dist(s, f) / speed;
+		return rweight;
 	}
 
 	// // calculating the distance between two points
@@ -124,7 +129,7 @@ public class Request implements Comparable<Request> {
 	public static Request createRandomRequest() {
 		double[] s = Graph.randPoint();
 		double[] f = Graph.randPoint();
-		double pt = Graph.randDouble(Graph.TLIMIT, 0);
+		double pt = Graph.randDouble(Graph.TLIMIT - weight(s, f), 0);
 
 		Request request = new Request(s, f, pt);
 
