@@ -8,16 +8,14 @@ import java.util.*;
  * finish = finish position (coordiantes)
  * pickTime is the time requested to be picked up
  */
-public class Request extends Point implements Comparable<Request> {
-	double[] startPos;
-	double[] finishPos;
-	double pickTime;
+public class Request implements Comparable<Request> {
+	public double[] startPos;
+	public double[] finishPos;
+	public double pickTime;
 	double weight; // given in time
-	double finishTime;
+	public double finishTime;
 	double speed = 1;
 	double f_val;
-	public static int numRequest;
-	public static int iterations;
 	// declare the Height and Width of our metric space
 	private static int WIDTH = 100;
 	private static int HEIGHT = 100;
@@ -34,11 +32,11 @@ public class Request extends Point implements Comparable<Request> {
 		this.f_val = 0;
 	}
 
-//	// calculating the distance between two points
-//	public double dist(double[] a, double[] b) {
-//		double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);
-//		return Math.sqrt(sum);
-//	}
+	// // calculating the distance between two points
+	// public double dist(double[] a, double[] b) {
+	// double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);
+	// return Math.sqrt(sum);
+	// }
 
 	// f= w1x1 * w2x2 * w3x3
 	// we have the best weights found, which are 0, 4 or 5, 1
@@ -52,11 +50,11 @@ public class Request extends Point implements Comparable<Request> {
 		origin[1] = 0;
 		return this.dist(origin, this.startPos);
 	}
-	
+
 	public double getX2() {
 		return this.pickTime;
 	}
-	
+
 	public double getX3(List<Request> rl) {
 		double min = Double.MAX_VALUE;
 		for (Request r : rl) {
@@ -90,7 +88,8 @@ public class Request extends Point implements Comparable<Request> {
 	}
 
 	public String toString() {
-		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos) + "; (" + pickTime + "," + finishTime + "); "
+		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos) + "; ("
+				+ pickTime + "," + finishTime + "); "
 				+ "f-value: " + f_val;
 	}
 
@@ -147,7 +146,7 @@ public class Request extends Point implements Comparable<Request> {
 	 * Returns:
 	 * A list representing a request [startpos, finishpos, picktime]
 	 */
-	public static List<Request> createRequests() {
+	public static List<Request> createRequests(int numRequest) {
 		List<Request> requests = new ArrayList<Request>();
 		for (int i = 0; i < numRequest; i++) {
 			requests.add(createRandomRequest());
