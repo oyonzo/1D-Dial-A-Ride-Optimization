@@ -6,7 +6,7 @@ public class Graph {
 
 	static int WIDTH = 100;
 	static int HEIGHT = 100;
-	static int TLIMIT = 24;
+	static int TLIMIT = 150;
 
 	public static double dist(double[] a, double[] b) {
 		double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);

@@ -60,7 +60,7 @@ public class Request implements Comparable<Request> {
 			if (this.equals(r))
 				continue;
 
-			double distToNext = dist(r.startPos, this.finishPos);
+			double distToNext = Graph.dist(r.startPos, this.finishPos);
 			if (distToNext < min) {
 				min = distToNext;
 			}
@@ -87,7 +87,7 @@ public class Request implements Comparable<Request> {
 	}
 
 	public String toString() {
-		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos) + "; ("
+		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos) + "; start,end: ("
 				+ pickTime + "," + finishTime + "); "
 				+ "f-value: " + f_val;
 	}

@@ -32,7 +32,7 @@ public class Driver extends Graph {
      */
     public List<Driver> generateRandDrivers(int numDrivers) {
         List<Driver> drivers = new ArrayList<Driver>();
-            for(int i = 0; i < numDrivers; i++;){
+            for(int i = 0; i < numDrivers; i++){
                 drivers.add(newRandDriver());
             }
             return drivers;
@@ -77,7 +77,7 @@ public class Driver extends Graph {
             double time = 0;
             // TODO think of what origins should be because we now have multiple drivers
             // with different origins
-            double[] origin = driver.getPosition()
+            double[] origin = driver.getPosition();
             // i is a request in a set
             for (int i = 0; i < newnewMain.combinations.get(j).size(); i++) {
                 if (newnewMain.combinations.get(j).get(i).pickTime < time) {

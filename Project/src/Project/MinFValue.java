@@ -51,7 +51,7 @@ public class MinFValue {
         for (Driver driver : drivers) {
             // create a priority queue to hold the requests sorted by distance
             PriorityQueue<Request> closestRequests = new PriorityQueue<>(
-                Comparator.comparingDouble(r -> Point.dist(driver.getPosition(), r.startPos))
+                Comparator.comparingDouble(r -> Graph.dist(driver.getPosition(), r.startPos))
             );
 
             closestRequests.addAll(requests);
@@ -77,7 +77,7 @@ public class MinFValue {
         for (Driver driver : driverList) {
             // Check if the driver has fewer than maxRequests requests assigned
             if (driver.schedule.size() < maxRequests) {
-                double distance = Point.dist(driver.getPosition(), r.startPos);
+                double distance = Graph.dist(driver.getPosition(), r.startPos);
                 if (distance < closestDistance) {
                     closestDriver = driver;
                     closestDistance = distance;
@@ -96,7 +96,7 @@ public class MinFValue {
      * if not, return false
      */
     public boolean enoughTimeToDrive(Driver d, Request r ) {
-        double drivingTime = Point.dist(d.getPosition(), r.startPos) / 1; // Calculate driving time
+        double drivingTime = Graph.dist(d.getPosition(), r.startPos) / 1; // Calculate driving time
         return (currentTime() + drivingTime <= r.pickTime); // Return true if driver can arrive on time
     }
 

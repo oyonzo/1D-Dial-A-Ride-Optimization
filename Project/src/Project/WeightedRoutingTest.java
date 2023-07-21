@@ -8,8 +8,7 @@ public class WeightedRoutingTest {
 	public static void main(String[] args) {
 		WeightedRoutingTest program = new WeightedRoutingTest();
 
-        Request.numRequest = 10;
-        List<Request> requestList = Request.createRequests();
+        List<Request> requestList = Request.createRequests(5);
 		for (Request request : requestList) {
 			request.setf(requestList);
 		}
@@ -33,7 +32,7 @@ public class WeightedRoutingTest {
             while (iterator.hasNext()) {
                 Request request = iterator.next();
                 // Adjust pickup time based on travel time
-                double pickTime = request.pickTime + request.dist(request.startPos, c) / request.speed;
+                double pickTime = request.pickTime + Graph.dist(request.startPos, c) / request.speed;
                 if (pickTime < t || request.finishTime < t) {
                     // Remove all requests whose desired pickup time or arrival time has already passed
                     iterator.remove();
@@ -55,20 +54,20 @@ public class WeightedRoutingTest {
 	/*
 	 * This method is used to randomly generate a double[] which includes 3 values w1, w2, w3 adding up to 1
 	 */
-	public static double[] randomWeightGenerator() {
-		double[] res = new double[3];
-		Random rand = new Random();
-
-        double w1 = rand.nextDouble(); // Generate first double
-        double w2 = rand.nextDouble() * (1 - w1); // Generate second double, scale it so the sum of w1 and w2 is not more than 1
-        double w3 = 1 - w1 - w2; // Subtract the sum of the first two from 1 to get the third
-        
-        res[0] = w1;
-        res[1] = w2;
-        res[2] = w3;
-		
-        return res;
-	}
+//	public static double[] randomWeightGenerator() {
+//		double[] res = new double[3];
+//		Random rand = new Random();
+//
+//        double w1 = rand.nextDouble(); // Generate first double
+//        double w2 = rand.nextDouble() * (1 - w1); // Generate second double, scale it so the sum of w1 and w2 is not more than 1
+//        double w3 = 1 - w1 - w2; // Subtract the sum of the first two from 1 to get the third
+//        
+//        res[0] = w1;
+//        res[1] = w2;
+//        res[2] = w3;
+//		
+//        return res;
+//	}
 
 
 }
