@@ -9,10 +9,19 @@ public class Driver extends Point{
     List<Request> schedule;
     private double[] position;
     private static int speed=1;
+    private double currentTime=0;
 
     public Driver(double[] position) {
         this.schedule = new ArrayList<>();
         this.position = position;
+    }
+    
+    public double getCurrentTime() {
+    	return currentTime;
+    }
+    
+    public void setCurrentTime(double time) {
+    	currentTime = time;
     }
     
     public double[] getPosition() {
