@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Driver {
+public class Driver extends Point{
     List<Request> schedule;
     private double[] position;
+    private static int speed=1;
 
     public Driver(double[] position) {
         this.schedule = new ArrayList<>();

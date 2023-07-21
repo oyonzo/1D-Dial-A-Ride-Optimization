@@ -10,9 +10,8 @@ public class WeightedRoutingTest {
 
         Request.numRequest = 10;
         List<Request> requestList = Request.createRequests();
-        double[] weights = randomWeightGenerator();
 		for (Request request : requestList) {
-			request.setf(weights[0], weights[1], weights[2],requestList);
+			request.setf(requestList);
 		}
         System.out.println(requestList);
         System.out.println();
@@ -24,7 +23,8 @@ public class WeightedRoutingTest {
     }
 	
 	public void weightedRouting(List<Request> requestList, double t, double[] c) {
-		List<Request> res = new ArrayList<Request>();
+		List<Request> res = new ArrayList<Request>();// create an list to record the served request
+		
         // Sort the requestList in ascending order of f function value
         Collections.sort(requestList, Comparator.comparingDouble(request -> request.f_val));
 
@@ -33,8 +33,8 @@ public class WeightedRoutingTest {
             while (iterator.hasNext()) {
                 Request request = iterator.next();
                 // Adjust pickup time based on travel time
-                request.pickTime += request.dist(request.startPos, c) / request.speed;
-                if (request.pickTime < t || request.finishTime < t) {
+                double pickTime = request.pickTime + request.dist(request.startPos, c) / request.speed;
+                if (pickTime < t || request.finishTime < t) {
                     // Remove all requests whose desired pickup time or arrival time has already passed
                     iterator.remove();
                 } else {
@@ -47,9 +47,14 @@ public class WeightedRoutingTest {
                 }
             }
         }
+        System.out.println(res);
         System.out.println(res.size()); // print the number of requests being served
     }
 	
+	
+	/*
+	 * This method is used to randomly generate a double[] which includes 3 values w1, w2, w3 adding up to 1
+	 */
 	public static double[] randomWeightGenerator() {
 		double[] res = new double[3];
 		Random rand = new Random();

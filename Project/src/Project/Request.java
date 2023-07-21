@@ -8,7 +8,7 @@ import java.util.*;
  * finish = finish position (coordiantes)
  * pickTime is the time requested to be picked up
  */
-public class Request implements Comparable<Request> {
+public class Request extends Point implements Comparable<Request> {
 	double[] startPos;
 	double[] finishPos;
 	double pickTime;
@@ -34,15 +34,16 @@ public class Request implements Comparable<Request> {
 		this.f_val = 0;
 	}
 
-	// calculating the distance between two points
-	public double dist(double[] a, double[] b) {
-		double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);
-		return Math.sqrt(sum);
-	}
+//	// calculating the distance between two points
+//	public double dist(double[] a, double[] b) {
+//		double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);
+//		return Math.sqrt(sum);
+//	}
 
 	// f= w1x1 * w2x2 * w3x3
-	public void setf(double weight1, double weight2, double weight3, List<Request> rl) {
-		f_val = weight1 * this.getX1() + weight2 * this.getX2() + weight3 * this.getX3(rl);
+	// we have the best weights found, which are 0, 4 or 5, 1
+	public void setf(List<Request> rl) {
+		f_val = 0 * this.getX1() + 5 * this.getX2() + 1 * this.getX3(rl);
 	}
 
 	public double getX1() {
