@@ -17,9 +17,6 @@ public class Request implements Comparable<Request> {
 	double speed = 1;
 	double f_val;
 	// declare the Height and Width of our metric space
-	static int WIDTH = 100;
-	static int HEIGHT = 100;
-	private static int TLIMIT = 24;
 
 	// In reality, each request can be viewed as a request of starting position,
 	// finish position, and when to pick up
@@ -103,25 +100,10 @@ public class Request implements Comparable<Request> {
 	 * Returns:
 	 * A random double
 	 */
-	private static double randDouble(double rangeMax, double rangeMin) {
+	static double randDouble(double rangeMax, double rangeMin) {
 		Random r = new Random();
 		double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 		return randomValue;
-	}
-
-	/*
-	 * Create a random point with an x and y value within the constraints of the
-	 * metric space
-	 * 
-	 * Returns:
-	 * An Array containing the coordinates of the point [x,y]
-	 */
-	static double[] randPoint() {
-		double x = randDouble(WIDTH, 0);
-		double y = randDouble(HEIGHT, 0);
-
-		double[] point = new double[] { x, y };
-		return point;
 	}
 
 	/*
@@ -131,9 +113,9 @@ public class Request implements Comparable<Request> {
 	 * An array representing a request [startpos, finishpos, picktime]
 	 */
 	public static Request createRandomRequest() {
-		double[] s = randPoint();
-		double[] f = randPoint();
-		double pt = randDouble(TLIMIT, 0);
+		double[] s = Graph.randPoint();
+		double[] f = Graph.randPoint();
+		double pt = randDouble(Graph.TLIMIT, 0);
 
 		Request request = new Request(s, f, pt);
 
