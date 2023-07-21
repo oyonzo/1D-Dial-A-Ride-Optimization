@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Driver extends Point {
+public class Driver extends Graph {
     List<Request> schedule;
     private double[] position;
     private static int speed = 1;
@@ -71,5 +71,6 @@ public class Driver extends Point {
         origin[0] = 0;
         origin[1] = 0;
         Driver test = new Driver(origin);
-        System.out.println(Arrays.toString(Graph.randPoint());
+        System.out.println(Arrays.toString(Graph.randPoint()));
     }
+}
