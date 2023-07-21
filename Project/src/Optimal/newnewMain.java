@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import Project.Request;
 import Project.LinearRequest;
+import Project.Driver;
 
 public class newnewMain {
     public static int iterations;
@@ -133,7 +134,8 @@ public class newnewMain {
 
     }
 
-    public static List<Request> getOptimal(List<Request> lrl) {
+    // this is way harder for multiple drivers
+    public static List<Request> getOptimalforDriver(List<Request> lrl, Driver driver) {
 
         // gives us a list of list of requests, in every combination possible
         permute(lrl, 0);
@@ -142,7 +144,7 @@ public class newnewMain {
             double time = 0;
             // TODO think of what origins should be because we now have multiple drivers
             // with different origins
-            double[] origin = new double[] { 0, 0 };
+            double[] origin = driver.location
             // i is a request in a set
             for (int i = 0; i < combinations.get(j).size(); i++) {
                 if (combinations.get(j).get(i).pickTime < time) {

@@ -17,8 +17,8 @@ public class Request implements Comparable<Request> {
 	double speed = 1;
 	double f_val;
 	// declare the Height and Width of our metric space
-	private static int WIDTH = 100;
-	private static int HEIGHT = 100;
+	static int WIDTH = 100;
+	static int HEIGHT = 100;
 	private static int TLIMIT = 24;
 
 	// In reality, each request can be viewed as a request of starting position,
@@ -116,7 +116,7 @@ public class Request implements Comparable<Request> {
 	 * Returns:
 	 * An Array containing the coordinates of the point [x,y]
 	 */
-	private static double[] randPoint() {
+	static double[] randPoint() {
 		double x = randDouble(WIDTH, 0);
 		double y = randDouble(HEIGHT, 0);
 
