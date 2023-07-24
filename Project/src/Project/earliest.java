@@ -19,12 +19,13 @@ public class earliest {
         assignClosestRequests(driverList, unassignedRequests, n/k, assignedDrivers);
 
         // Step 4: For any unassigned request, find the closest driver and assign
-        for (Request request : unassignedRequests) {
-            Driver closestDriver = findClosestDriver(driverList, request, n/k + THRESHOLD);
-
+        Iterator<Request> iterator = unassignedRequests.iterator();
+        while (iterator.hasNext()) {
+            Request r = iterator.next();
+            Driver closestDriver = findClosestDriver(driverList, r, n/k + THRESHOLD);
             if (closestDriver != null) {
-                assignedDrivers.put(request, closestDriver);
-                unassignedRequests.remove(request);
+                assignedDrivers.put(r, closestDriver);
+                iterator.remove();  // Safe removal using iterator
             }
         }
 
