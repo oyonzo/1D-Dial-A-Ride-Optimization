@@ -1,84 +1,104 @@
 package Project;
+
 import java.util.*;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class earliest {
-    public static List<Request> requests = new ArrayList<Request>();
-    //public static LinkedList<Request> linkedRequests = new LinkedList<Request>();
-    //public static List<Request> unassignedRequests = new ArrayList<Request>();
-    //public static List<Integer> sorted = new ArrayList<>();
-    public static int numDrivers;
-    public static int n = requests.size();
-    public static int threshold = 1;
-    public static double[] startPos, finishPos;
-    public static double pickTime;
-    public static Iterator<Request> nextRequest = requests.iterator();
+    private static final int THRESHOLD = 1;
 
-    // Adds requests to requestList, sorts requests by increasing pickup time, creates drivers
-    public static void assign(List<Request> requests) {
-        requests = Request.createRequests();
-        Request request = new Request(startPos, finishPos, pickTime);
-        Collections.sort(requests, Comparator.comparingDouble(r -> r.pickTime));
-        List<Driver> drivers = new ArrayList<>();
-        double[] position = Driver.generateRandomPosition();
-        
-        // creates numDrivers drivers with random starting position
-        for (int i = 0; i < numDrivers; i++) {
-            drivers.add(new Driver(position));
+    public void Earliest(List<Request> requestList, List<Driver> driverList) {
+        int n = requestList.size();
+        int k = driverList.size();
+
+        Map<Request, Driver> assignedDrivers = new HashMap<>();
+        List<Request> unassignedRequests = new ArrayList<>(requestList);
+
+        // // Step 1: Sort the requests in increasing order of pickup time
+        Collections.sort(requestList, Comparator.comparingDouble(request -> request.pickTime));
+       
+        // Step 3: Assign each driver the (at most) n/k requests with the closest pickup locations
+        assignClosestRequests(driverList, requestList, n/k);
+
+        // Step 4: For any unassigned request, find the closest driver and assign
+        for (Request request : unassignedRequests) {
+            Driver closestDriver = findClosestDriver(driverList, request, n/k + THRESHOLD);
+
+            if (closestDriver != null) {
+                assignedDrivers.put(request, closestDriver);
+                unassignedRequests.remove(request);
+            }
         }
 
-        for (int i = 0; i < n; i++) {
-            if (!assignRequest(request, drivers, n / numDrivers + threshold)) {
-                assignClosestDriver(request, drivers);
+        // Step 6: For each request in Request-List
+        for (Request e : requestList) {
+            Driver d = assignedDrivers.get(e);
+            // for an assigned driver
+            if (d != null) {
+                // if pickup time hasn't passed and enough time to drive to pickup location, add request e to schedule
+                if (e.pickTime > currentTime() && hasEnoughTime(d, e)) {
+                    d.schedule.add(e);
+                    // update driver's currLocation to finishPos of completed request
+                    d.setPosition(e.finishPos);
+                }
             }
         }
     }
-    
-    // determines if driver can add an additional request
-    // @return true if it can, false otherwise
-    private static boolean assignRequest(Request request, List<Driver> drivers, int maxAssigned) {
+
+    // assigns closest requests to driver
+    private void assignClosestRequests(List<Driver> drivers, List<Request> requests, int count) {
         for (Driver driver : drivers) {
-            if (driver.schedule.size() < maxAssigned) {
-                driver.schedule.add(request);
-                return true;
+            // create a priority queue to hold the requests sorted by distance
+            PriorityQueue<Request> closestRequests = new PriorityQueue<>(
+                Comparator.comparingDouble(r -> Graph.dist(driver.getPosition(), r.startPos))
+            );
+
+            closestRequests.addAll(requests);
+
+            // assign the closest requests to the driver
+            for (int i = 0; i < count && !closestRequests.isEmpty(); i++) {
+                Request request = closestRequests.poll();  // get the closest request
+                driver.schedule.add(request);  // add it to the driver's schedule
+                requests.remove(request);  // remove it from the list of requests
             }
         }
-        return false;
     }
 
-    // assigns drivers to their closest requests
-    private static void assignClosestDriver(Request request, List<Driver> drivers) {
+    // assigns drivers to closest requests
+    public Driver findClosestDriver(List<Driver> driverList, Request r, double maxRequests) {
         Driver closestDriver = null;
         double closestDist = Double.MAX_VALUE;
-        for (Driver driver : drivers) {
-            double distance = request.getX3(requests);
-            if (distance < closestDist) {
-                closestDriver = driver;
-                closestDist = distance;
+        for (Driver driver : driverList) {
+            if (driver.schedule.size() < maxRequests) {
+                double distance = Graph.dist(driver.getPosition(), r.startPos);
+                if (distance < closestDist) {
+                    closestDriver = driver;
+                    closestDist = distance;
+                }
             }
         }
-        if (closestDriver != null) {
-            closestDriver.schedule.add(request);
+        return closestDriver;
         }
-    }
 
-    // Compares the time required to travel from the Driver's currLocation to the pickup location with 
-    // the time remaining until the pickup time
+    // calculate if the driver has enough time to get from their current position to the pickup position of a request
     // @return true if there is enough time, false otherwise
-    private static boolean hasEnoughTime (Driver driver, Request request) {
-        return (request.dist(driver.getPosition(), request.finishPos) <= request.getX2());
+    public boolean hasEnoughTime (Driver d, Request r) {
+        double drivingTime = Graph.dist(d.getPosition(), r.startPos) / 1;
+        return (currentTime() + drivingTime <= r.pickTime);
     }
 
     // @return driver of specified request
-    private static Driver getAssignedDriver(Request request, List<Driver> drivers) {
-        for (Driver driver : drivers) {
-            if (driver.schedule.contains(request)) {
+    /*private static Driver getAssignedDriver(Request r, List<Driver> driverList) {
+        for (Driver driver : driverList) {
+            if (driver.schedule.contains(r)) {
                 return driver;
             }
         }
         return null;
-    } 
+    }*/
+
+    private double currentTime() {
+        // Actual implementation depends on system specifics
+        return 0;
+    }
 }
 
 
