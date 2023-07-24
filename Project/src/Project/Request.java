@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import Optimal.newnewMain;
 
@@ -92,7 +93,8 @@ public class Request implements Comparable<Request> {
 	}
 
 	public String toString() {
-		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos) + "; start,end: ("
+		return "StartPos: " + Arrays.toString(startPos) + ", finishPos: " + Arrays.toString(finishPos)
+				+ "; start,end: ("
 				+ pickTime + "," + finishTime + "); "
 				+ "f-value: " + f_val;
 	}
@@ -148,5 +150,16 @@ public class Request implements Comparable<Request> {
 			requests.add(createRandomRequest());
 		}
 		return requests;
+	}
+
+	/**
+	 * @param rl A list of Requests
+	 * @return the of Requests sorted by pickTime
+	 */
+	public static List<Request> sortRequests(List<Request> rl) {
+		List<Request> sortedList = rl.stream()
+				.sorted(Comparator.comparingDouble(Request -> Request.pickTime))
+				.collect(Collectors.toList());
+		return sortedList;
 	}
 }
