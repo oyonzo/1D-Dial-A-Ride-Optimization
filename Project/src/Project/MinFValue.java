@@ -17,14 +17,16 @@ public class MinFValue {
         Collections.sort(requestList, Comparator.comparingDouble(request -> request.f_val));
 
         // Step 3: Assign each driver the (at most) n/k requests with the closest pickup locations
-        assignClosestRequests(driverList, requestList, n/k);
+        assignClosestRequests(driverList, unassignedRequests, n/k, assignedDrivers);
 
         // Step 4: For any unassigned request, find the closest driver and assign
-        for (Request r : unassignedRequests) {
+        Iterator<Request> iterator = unassignedRequests.iterator();
+        while (iterator.hasNext()) {
+            Request r = iterator.next();
             Driver closestDriver = findClosestDriver(driverList, r, n/k + THRESHOLD);
             if (closestDriver != null) {
                 assignedDrivers.put(r, closestDriver);
-                unassignedRequests.remove(r);
+                iterator.remove();  // Safe removal using iterator
             }
         }
 
@@ -37,17 +39,18 @@ public class MinFValue {
 
             if (d != null) { // If a driver is assigned
                 // If pickup time hasn't passed and there's enough time to drive from current location
-                if (e.pickTime > currentTime() && enoughTimeToDrive(d, e)) {
+                if (e.pickTime > d.getCurrentTime() && enoughTimeToDrive(d, e)) {
                     // Add request to driver's schedule
                     d.schedule.add(e);
                     // Update driver's current location to request's drop-off location
                     d.setPosition(e.finishPos);
+                    d.setCurrentTime(e.finishTime);
                 }
             }
         }
     }
 
-    private void assignClosestRequests(List<Driver> drivers, List<Request> requests, int count) {
+    private void assignClosestRequests(List<Driver> drivers, List<Request> requests, int count, Map<Request, Driver> assignedDrivers) {
         for (Driver driver : drivers) {
             // create a priority queue to hold the requests sorted by distance
             PriorityQueue<Request> closestRequests = new PriorityQueue<>(
@@ -59,7 +62,13 @@ public class MinFValue {
             // assign the closest requests to the driver
             for (int i = 0; i < count && !closestRequests.isEmpty(); i++) {
                 Request request = closestRequests.poll();  // get the closest request
-                driver.schedule.add(request);  // add it to the driver's schedule
+                if(assignedDrivers.containsKey(request)) {
+                	if (Graph.dist(driver.getPosition(),request.startPos) < Graph.dist(assignedDrivers.get(request).getPosition(), request.startPos)) {
+                		assignedDrivers.put(request, driver);
+                	}
+                } else {
+                	assignedDrivers.put(request, driver);
+                }
                 requests.remove(request);  // remove it from the list of requests
             }
         }
@@ -97,20 +106,29 @@ public class MinFValue {
      */
     public boolean enoughTimeToDrive(Driver d, Request r ) {
         double drivingTime = Graph.dist(d.getPosition(), r.startPos) / 1; // Calculate driving time
-        return (currentTime() + drivingTime <= r.pickTime); // Return true if driver can arrive on time
+        return (d.getCurrentTime() + drivingTime <= r.pickTime); // Return true if driver can arrive on time
     }
 
 
 
-    private double currentTime() {
-        // Actual implementation depends on system specifics
-        return 0;
-    }
+//    private double currentTime() {
+//        // Actual implementation depends on system specifics
+//        return 0;
+//    }
 
 
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		List<Request> requestList = Request.createRequests(20);
+		for (Request r : requestList) {
+			r.setf(requestList);
+		}
+		List<Driver> driverList = Driver.generateRandDrivers(5);
+		MinFValue program = new MinFValue();
+		program.minFValue(requestList, driverList);
+		for(Driver d:driverList) {
+			System.out.println(d.schedule);
+		}
 
 	}
 

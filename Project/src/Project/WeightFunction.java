@@ -214,7 +214,6 @@ public class WeightFunction {
 			runAlg(lrl, time, origin, w1, w2, w3);// Recursive call
 		}
 
-		return;
 	}
 
 	/*

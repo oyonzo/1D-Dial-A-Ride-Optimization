@@ -21,7 +21,7 @@ public class Driver extends Graph {
     /**
      * @return creates a driver at a random location
      */
-    public Driver newRandDriver() {
+    public static Driver newRandDriver() {
         Driver d = new Driver(Graph.randPoint());
         return d;
     }
@@ -30,7 +30,7 @@ public class Driver extends Graph {
      * @param numDrivers the number of drivers to be generated
      * @return a list of drivers of size numDrivers
      */
-    public List<Driver> generateRandDrivers(int numDrivers) {
+    public static List<Driver> generateRandDrivers(int numDrivers) {
         List<Driver> drivers = new ArrayList<Driver>();
 
             for(int i = 0; i < numDrivers; i++){

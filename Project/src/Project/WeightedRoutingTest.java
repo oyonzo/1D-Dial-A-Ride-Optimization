@@ -1,6 +1,5 @@
 package Project;
 
-import Project.Request;
 import java.util.*;
 
 public class WeightedRoutingTest {
@@ -8,9 +7,9 @@ public class WeightedRoutingTest {
 	public static void main(String[] args) {
 		WeightedRoutingTest program = new WeightedRoutingTest();
 
-        List<Request> requestList = Request.createRequests(5);
-		for (Request request : requestList) {
-			request.setf(requestList);
+        List<Request> requestList = Request.createRequests(10);
+        for (Request r : requestList) {
+			r.setf(requestList);
 		}
         System.out.println(requestList);
         System.out.println();
@@ -24,6 +23,10 @@ public class WeightedRoutingTest {
 	public void weightedRouting(List<Request> requestList, double t, double[] c) {
 		List<Request> res = new ArrayList<Request>();// create an list to record the served request
 		
+//		// assign f-value to each request
+//		for (Request r : requestList) {
+//			r.setf(requestList);
+//		}
         // Sort the requestList in ascending order of f function value
         Collections.sort(requestList, Comparator.comparingDouble(request -> request.f_val));
 
@@ -32,8 +35,8 @@ public class WeightedRoutingTest {
             while (iterator.hasNext()) {
                 Request request = iterator.next();
                 // Adjust pickup time based on travel time
-                double pickTime = request.pickTime + Graph.dist(request.startPos, c) / request.speed;
-                if (pickTime < t || request.finishTime < t) {
+                double moveTime = Graph.dist(request.startPos, c) / Request.speed;
+                if (t+moveTime > request.pickTime || request.finishTime < t) {
                     // Remove all requests whose desired pickup time or arrival time has already passed
                     iterator.remove();
                 } else {
@@ -45,6 +48,12 @@ public class WeightedRoutingTest {
                     break; // stop iteration as we've served a request
                 }
             }
+            // Reassign the f-value
+            for (Request r : requestList) {
+    			r.setf(requestList);
+    		}
+            // Sort the requestList
+            Collections.sort(requestList, Comparator.comparingDouble(request -> request.f_val));
         }
         System.out.println(res);
         System.out.println(res.size()); // print the number of requests being served
