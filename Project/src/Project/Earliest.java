@@ -105,10 +105,6 @@ public class Earliest {
     
     public static void main(String[] args) {
 List<Request> requestList = Request.createRequests(75);
-		
-		for (Request r : requestList) {
-			r.setf(requestList);
-		}
 		List<Driver> driverList = Driver.generateRandDrivers(15);
 		//print out the start position of each driver
 		for(Driver d:driverList) {

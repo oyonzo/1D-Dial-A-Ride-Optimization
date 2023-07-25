@@ -12,6 +12,7 @@ public class Driver extends Graph {
     private double[] position;
     private static int speed = 1;
     private double currentTime = 0;
+    public static double[][] locations = Graph.generateFixedList();
 
     public Driver(double[] position) {
         this.schedule = new ArrayList<>();
@@ -22,7 +23,9 @@ public class Driver extends Graph {
      * @return creates a driver at a random location
      */
     public static Driver newRandDriver() {
-        Driver d = new Driver(Graph.randPoint());
+    	Random rand = new Random();
+    	int index = rand.nextInt(20);
+        Driver d = new Driver(locations[index]);
         return d;
     }
 
