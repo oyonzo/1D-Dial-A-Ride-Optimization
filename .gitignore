@@ -1,2 +1,12 @@
 .project
 *.class
+Project/bin/debug/compare.class
+Project/bin/debug/debug.class
+Project/bin/Optimal/newMain.class
+Project/bin/Optimal/ShareRide.class
+Project/bin/Project/Algorithm.class
+Project/bin/Project/LinearRequest.class
+Project/bin/Project/Request.class
+Project/bin/Project/Test.class
+Project/bin/Project/WeightFunction.class
+Project/src/Project/Earliest.java
