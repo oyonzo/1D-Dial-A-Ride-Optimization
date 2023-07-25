@@ -31,7 +31,7 @@ public class newnewMain {
         System.out.print("How many iterations do you want: ");
         iterations = sc.nextInt();
 
-        System.out.print("How many iterations do you want: ");
+        System.out.print("How many drivers do you want: ");
         numDrivers = sc.nextInt();
 
         sc.close();
@@ -44,68 +44,6 @@ public class newnewMain {
                 System.out.println(r.toString());
             }
 
-            System.out.println("\nRound " + (i + 1));
-            // Get The RunTime of OPT
-            long startTime = System.nanoTime();
-            List<LinearRequest> print = getOptimal(rl);
-            int OPT = print.size();
-            long endTime = System.nanoTime();
-
-            System.out.println("OPT takes " + (endTime - startTime) / 100000.0 + " Millisecond");
-
-            // RunTime of ALL Combination of weights
-            // Alg with best combinations
-            startTime = System.nanoTime();
-            wf.set.clear();
-            List<LinearRequest> ml = wf.runAlg1(rl);
-            int s = ml.size();
-            endTime = System.nanoTime();
-            System.out.println(
-                    "ALG with best combination takes " + (endTime - startTime) / 100000.0 + " Millisecond");
-
-            // RunTime of ShareRides
-            startTime = System.nanoTime();
-            ShareRide sr = new ShareRide();
-            sr.set.clear();
-            List<LinearRequest> share = sr.shareAlg(temp2);
-            int shareSize = share.size();
-            endTime = System.nanoTime();
-            System.out.println("Pure Share Rides takes " + (endTime - startTime) / 100000.0 + " Millisecond");
-
-            System.out.println("\nThe Optimal List: ");
-            for (LinearRequest r : print) {
-                System.out.println(r.toString());
-            }
-            // clear the set for the next iteration
-            print.clear();
-            combinations.clear();
-            index = 0;
-
-            System.out.println("\nShareRides List:");
-            for (LinearRequest r : share) {
-                System.out.println(r.toString());
-            }
-
-            // RunTime of ALG
-            startTime = System.nanoTime();
-            wf.set.clear();
-            wf.runAlg2(temp1, 0, 0, 0, 1, 1);
-            int size = wf.set.size();
-            endTime = System.nanoTime();
-            System.out.println("ALG takes " + (endTime - startTime) / 100000.0 + " Millisecond");
-
-            System.out.println("\n30 in advance & ShareRides List:");
-            for (LinearRequest r : wf.set) {
-                System.out.println(r.toString());
-            }
-
-            // System.out.println("\nThe Max Size from OPT is: " + OPT + "\nThe Max Size
-            // from ALG with best combination is: " + s + "\nThe Max Size from ALG is(30 in
-            // advance & sharerides): " + size + "\nThe Max Size from Share Ride: " +
-            // shareSize);
-            System.out.println("\nThe Max Size from OPT is: " + OPT
-                    + "\nThe Max Size from ALG is(30 in advance & sharerides): " + size
-                    + "\nThe Max Size from Share Ride: " + shareSize);
         }
 
     }

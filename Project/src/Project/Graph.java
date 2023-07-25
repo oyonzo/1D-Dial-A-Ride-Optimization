@@ -1,6 +1,6 @@
 package Project;
 
-import java.util.Random;
+import java.util.*;
 
 public class Graph {
 
@@ -15,7 +15,12 @@ public class Graph {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		List<double[]> points = new ArrayList<double[]>();
+		points = generateRandPoints(20);
+		for (double[] p : points) {
+			System.out.println(Arrays.toString(p));
 
+		}
 	}
 
 	/*
@@ -25,13 +30,49 @@ public class Graph {
 	 * Returns:
 	 * An Array containing the coordinates of the point [x,y]
 	 */
-	static double[] randPoint() {
-		double x = Graph.randDouble(WIDTH, 0);
-		double y = Graph.randDouble(HEIGHT, 0);
+	public static double[] randPoint() {
+		double x = Graph.randDouble(42.4, 0);
+		double y = Graph.randDouble(42.4, 0);
 
 		double[] point = new double[] { x, y };
 		return point;
 	}
+
+	/**
+	 * @param amount number of points to generate
+	 * @return a list containing amount number of points
+	 */
+	public static List<double[]> generateRandPoints(int amount) {
+		List<double[]> points = new ArrayList<double[]>();
+		for (int i = 0; i < amount; i++) {
+			points.add(randPoint());
+		}
+		return points;
+	}
+
+	public static List<double[]> generateFixedList(){
+		List<List<Double>> coordinatesList = List.of(
+            List.of(10.962229830586004, 0.9439729881256506),
+            List.of(22.165535883352796, 29.53270781117363),
+            List.of(37.33011717132071, 26.373511002047405),
+            List.of(21.246204778898193, 36.64766052587953),
+            List.of(2.6238602849973187, 40.69015712051377),
+            List.of(22.704608370595356, 38.64631471180244),
+            List.of(8.012079927442816, 33.08897605983439),
+            List.of(31.075387422145145, 18.867498939145417),
+            List.of(27.56424598311243, 18.141349866825912),
+            List.of(9.853250978158638, 18.19206186629683),
+            List.of(6.498811170561941, 29.151853831575337),
+            List.of(28.892212783770375, 42.25182445486328),
+            List.of(33.712027864019625, 6.31506735439976),
+            List.of(21.597675610248814, 36.75223736147819),
+            List.of(30.399461087266303, 36.689079802511756),
+            List.of(10.79996349371082, 29.46797529967659),
+            List.of(24.1370456387911, 29.404562311381152),
+            List.of(17.94590574781268, 18.499175392496355),
+            List.of(39.13189328128983, 33.639049058051015),
+            List.of(1.1030136099127195, 14.376809041999099)
+        );
 
 	/*
 	 * Generate a random double within a range
