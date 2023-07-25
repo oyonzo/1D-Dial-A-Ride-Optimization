@@ -19,6 +19,9 @@ public class Driver extends Graph {
         this.position = position;
     }
 
+    public void clearSchedule() {
+    	this.schedule.clear();
+    }
     /**
      * @return creates a driver at a random location
      */

@@ -138,7 +138,7 @@ public class Request implements Comparable<Request> {
 			finish = rand.nextInt(20);
 		}
 		double[] f = locations[finish];
-		double pt = Graph.randDouble(1440, 0);
+		double pt = Graph.randDouble(Graph.TLIMIT - weight(s, f), 0);
 
 		Request request = new Request(s, f, pt);
 
