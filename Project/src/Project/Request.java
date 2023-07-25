@@ -19,6 +19,7 @@ public class Request implements Comparable<Request> {
 	public double finishTime;
 	static double speed = 1;
 	double f_val;
+	public static double[][] locations = Graph.generateFixedList();
 	// declare the Height and Width of our metric space
 
 	// In reality, each request can be viewed as a request of starting position,
@@ -129,9 +130,15 @@ public class Request implements Comparable<Request> {
 	 * An array representing a request [startpos, finishpos, picktime]
 	 */
 	public static Request createRandomRequest() {
-		double[] s = Graph.randPoint();
-		double[] f = Graph.randPoint();
-		double pt = Graph.randDouble(Graph.TLIMIT - weight(s, f), 0);
+		Random rand = new Random();
+		int start = rand.nextInt(20);
+		double[] s = locations[start];
+		int finish = rand.nextInt(20);
+		while (finish==start) {
+			finish = rand.nextInt(20);
+		}
+		double[] f = locations[finish];
+		double pt = Graph.randDouble(1440, 0);
 
 		Request request = new Request(s, f, pt);
 

@@ -2,10 +2,10 @@ package Project;
 
 import java.util.*;
 
-public class earliest {
+public class Earliest {
     private static final int THRESHOLD = 1;
 
-    public void Earliest(List<Request> requestList, List<Driver> driverList) {
+    public void earliest(List<Request> requestList, List<Driver> driverList) {
         int n = requestList.size();
         int k = driverList.size();
 
@@ -102,6 +102,38 @@ public class earliest {
         }
         return null;
     }*/
+    
+    public static void main(String[] args) {
+List<Request> requestList = Request.createRequests(75);
+		
+		for (Request r : requestList) {
+			r.setf(requestList);
+		}
+		List<Driver> driverList = Driver.generateRandDrivers(15);
+		//print out the start position of each driver
+		for(Driver d:driverList) {
+			System.out.println(Arrays.toString(d.getPosition()));
+		}
+		
+		Earliest program = new Earliest();
+		program.earliest(requestList, driverList);
+		int total = 0;
+		//print out the schedule for each driver
+		for (int i=0; i<driverList.size(); i++) {
+			System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
+			total += driverList.get(i).schedule.size();
+		}
+		
+		System.out.println(total);
+//		for(Driver d:driverList) {
+//			System.out.println(d.schedule);
+//			System.out.println();
+//		}
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+		for (Request r : requestList) {
+			System.out.println(r);
+		}
+    }
 }
 
 

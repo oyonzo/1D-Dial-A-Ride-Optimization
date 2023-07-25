@@ -50,6 +50,7 @@ public class MinFValue {
         }
     }
 
+    
     private void assignClosestRequests(List<Driver> drivers, List<Request> requests, int count, Map<Request, Driver> assignedDrivers) {
         for (Driver driver : drivers) {
             // create a priority queue to hold the requests sorted by distance
@@ -119,16 +120,97 @@ public class MinFValue {
 
 
 	public static void main(String[] args) {
-		List<Request> requestList = Request.createRequests(20);
+//		double[] start1 = {1.0, 10.0};
+//		double[] end1 = {2.0, 10.0};
+//		double time1 = 12.0;
+//		
+//		double[] start2 = {3, 8};
+//		double[] end2 = {3, 7};
+//		double time2 = 16.0;
+//		
+//		double[] start3 = {5, 9};
+//		double[] end3 = {6, 9};
+//		double time3 = 20.0;
+//		
+//		double[] start4 = {50, 51};
+//		double[] end4 = {52, 51};
+//		double time4 = 2.0;
+//		
+//		double[] start5 = {52, 50};
+//		double[] end5 = {55, 50};
+//		double time5 = 5.0;
+//		
+//		double[] start6 = {56, 52};
+//		double[] end6 = {57, 52};
+//		double time6 = 15.0;
+//		
+//		double[] start7 = {91, 10};
+//		double[] end7 = {95, 10};
+//		double time7 = 3.0;
+//		
+//		double[] start8 = {95, 13};
+//		double[] end8 = {95, 15};
+//		double time8 = 12.0;
+//		
+//		double[] start9 = {91, 15};
+//		double[] end9 = {88, 15};
+//		double time9 = 20.0;
+//
+//		Request r1 = new Request(start1, end1, time1);
+//		Request r2 = new Request(start2, end2, time2);
+//		Request r3 = new Request(start3, end3, time3);
+//		Request r4 = new Request(start4, end4, time4);
+//		Request r5 = new Request(start5, end5, time5);
+//		Request r6 = new Request(start6, end6, time6);
+//		Request r7 = new Request(start7, end7, time7);
+//		Request r8 = new Request(start8, end8, time8);
+//		Request r9 = new Request(start9, end9, time9);
+//		
+//		List<Request> requestList = new ArrayList<Request>(Arrays.asList(r1,r2,r3,r4,r5,r6,r7,r8,r9));
+//		
+//		for (Request r : requestList) {
+//			r.setf(requestList);
+//		}
+//		
+//		double[] position1 = {0,0};
+//		double[] position2 = {50,50};
+//		double[] position3 = {90,10};
+//		
+//		Driver d1 = new Driver(position1);
+//		Driver d2 = new Driver(position2);
+//		Driver d3 = new Driver(position3);
+//		
+//		List<Driver> driverList = new ArrayList<Driver>(Arrays.asList(d1,d2,d3));
+		List<Request> requestList = Request.createRequests(75);
+		
 		for (Request r : requestList) {
 			r.setf(requestList);
 		}
-		List<Driver> driverList = Driver.generateRandDrivers(5);
+		List<Driver> driverList = Driver.generateRandDrivers(15);
+		//print out the start position of each driver
+		for(Driver d:driverList) {
+			System.out.println(Arrays.toString(d.getPosition()));
+		}
+		
 		MinFValue program = new MinFValue();
 		program.minFValue(requestList, driverList);
-		for(Driver d:driverList) {
-			System.out.println(d.schedule);
+		int total = 0;
+		//print out the schedule for each driver
+		for (int i=0; i<driverList.size(); i++) {
+			System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
+			total += driverList.get(i).schedule.size();
 		}
+		
+		System.out.println(total);
+//		for(Driver d:driverList) {
+//			System.out.println(d.schedule);
+//			System.out.println();
+//		}
+		System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+		for (Request r : requestList) {
+			System.out.println(r);
+		}
+		
 
 	}
 
