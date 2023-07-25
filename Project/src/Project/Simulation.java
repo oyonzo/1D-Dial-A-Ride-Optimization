@@ -66,7 +66,7 @@ public class Simulation {
     			total1 += driverList1.get(j).schedule.size();
     		}
     		resEarliest.add(total1);
-    		Simulation.clear(driverList);
+    		//Simulation.clear(driverList);
     		
   
         	// test minFValue
@@ -88,7 +88,7 @@ public class Simulation {
 				total2 += driverList2.get(j).schedule.size();
 			}
 			resMinF.add(total2);
-			Simulation.clear(driverList);
+			//Simulation.clear(driverList);
             
         }
         System.out.println(resEarliest);
