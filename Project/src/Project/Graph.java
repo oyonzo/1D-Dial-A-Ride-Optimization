@@ -21,6 +21,7 @@ public class Graph {
 			System.out.println(Arrays.toString(p));
 
 		}
+		System.out.println(generateFixedList());
 	}
 
 	/*
@@ -50,7 +51,7 @@ public class Graph {
 		return points;
 	}
 
-	public static List<double[]> generateFixedList(){
+	public static List<List<Double>> generateFixedList(){
 		List<List<Double>> coordinatesList = List.of(
             List.of(10.962229830586004, 0.9439729881256506),
             List.of(22.165535883352796, 29.53270781117363),
@@ -73,6 +74,8 @@ public class Graph {
             List.of(39.13189328128983, 33.639049058051015),
             List.of(1.1030136099127195, 14.376809041999099)
         );
+		return coordinatesList;
+	}
 
 	/*
 	 * Generate a random double within a range
