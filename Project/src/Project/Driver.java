@@ -116,6 +116,11 @@ public class Driver extends Graph {
 
         return newnewMain.combinations.get(maxIndex);
     }
+    
+    @Override
+    public String toString() {
+    	return "Position" + Arrays.toString(this.getPosition());
+    }
 
     public static void main(String[] args) {
         double[] origin = new double[2];

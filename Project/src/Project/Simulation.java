@@ -37,52 +37,57 @@ public class Simulation {
         
         for (int i = 0; i < iterations; i++) {
         	// initialize the request list
-            List<Request> requestList = Request.createRequests(numRequests);
+            List<Request> requestList1 = Request.createRequests(numRequests);
+            System.out.println(requestList1);
 
     		// initialize the driver list
-    		List<Driver> driverList = Driver.generateRandDrivers(numDrivers);
+    		List<Driver> driverList1 = Driver.generateRandDrivers(numDrivers);
+    		System.out.println(driverList1);
     		
-      
-        	List<Request> requestList1 = new ArrayList<>();
-        	for (Request r : requestList) {
-        		Request rCopy = new Request(r.startPos, r.finishPos, r.pickTime);
-        		requestList1.add(rCopy);
-        	}
-        	
-        	List<Request> requestList2 = new ArrayList<>();
-	    	for (Request r : requestList) {
-	    		Request rCopy = new Request(r.startPos, r.finishPos, r.pickTime);
-       		 requestList2.add(rCopy);
-	    	}
+    		List<Request> requestList2 = Request.createRequests(numRequests);
+            System.out.println(requestList2);
 	    	// initialize the f value for minFValue algorithm
     		for (Request r : requestList2) {
     			r.setf(requestList2);
     		}
 
+    		// initialize the driver list
+    		List<Driver> driverList2 = Driver.generateRandDrivers(numDrivers);
+    		System.out.println(driverList2);
+    		
+    		
+      
+//        	List<Request> requestList1 = new ArrayList<>();
+//        	for (Request r : requestList) {
+//        		Request rCopy = new Request(r.startPos, r.finishPos, r.pickTime);
+//        		requestList1.add(rCopy);
+//        	}
+//        	
+//        	List<Request> requestList2 = new ArrayList<>();
+//	    	for (Request r : requestList) {
+//	    		Request rCopy = new Request(r.startPos, r.finishPos, r.pickTime);
+//       		 requestList2.add(rCopy);
+//	    	}
 
-        	List<Driver> driverList1 = new ArrayList<>();
-        	for (Driver d : driverList) {
-        	    Driver dCopy = new Driver(d.getPosition());
-        	    driverList1.add(dCopy);
-        	}
-        	List<Driver> driverList2 = new ArrayList<>();
-	    	for (Driver d : driverList) {
-	    		 Driver dCopy = new Driver(d.getPosition());
-        	    driverList2.add(dCopy);
-	    	}
+//
+//
+//        	List<Driver> driverList1 = new ArrayList<>();
+//        	for (Driver d : driverList) {
+//        	    Driver dCopy = new Driver(d.getPosition());
+//        	    driverList1.add(dCopy);
+//        	}
+//        	List<Driver> driverList2 = new ArrayList<>();
+//	    	for (Driver d : driverList) {
+//	    		 Driver dCopy = new Driver(d.getPosition());
+//        	    driverList2.add(dCopy);
+//	    	}
 			
 	    	
     		
 			//test earliest
         	Earliest runEarliest = new Earliest();
         	runEarliest.earliest(requestList1, driverList1);
-    		int total1 = 0;
-    		//print out the schedule for each driver
-    		for (int j=0; j<driverList1.size(); j++) {
-    			//System.out.println("Driver"+ (j+1)+": " + driverList1.get(j).schedule);
-    			total1 += driverList1.get(j).schedule.size();
-    		}
-    		resEarliest.add(total1);
+        	resEarliest.add(runEarliest.totalRequestsDone(driverList1));
     		
     		// test minFValue
 	    	MinFValue runMinF = new MinFValue();
