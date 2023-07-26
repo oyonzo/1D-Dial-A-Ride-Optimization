@@ -97,6 +97,16 @@ public class MinFValue {
 
         return closestDriver;
     }
+    
+    public int totalRequestsDone(List<Driver> driverList) {
+    	int total = 0;
+		//print out the schedule for each driver
+		for (int i=0; i<driverList.size(); i++) {
+			System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
+			total += driverList.get(i).schedule.size();
+		}
+		return total;
+    }
 
 
 
@@ -194,14 +204,9 @@ public class MinFValue {
 		
 		MinFValue program = new MinFValue();
 		program.minFValue(requestList, driverList);
-		int total = 0;
-		//print out the schedule for each driver
-		for (int i=0; i<driverList.size(); i++) {
-			System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
-			total += driverList.get(i).schedule.size();
-		}
 		
-		System.out.println(total);
+		
+		System.out.println(program.totalRequestsDone(driverList));
 //		for(Driver d:driverList) {
 //			System.out.println(d.schedule);
 //			System.out.println();
