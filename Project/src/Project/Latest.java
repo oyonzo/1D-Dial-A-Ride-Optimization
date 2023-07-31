@@ -96,6 +96,16 @@ public class Latest {
         double drivingTime = Graph.dist(d.getPosition(), r.startPos) / 1; // Calculate driving time
         return (d.getCurrentTime() + drivingTime <= r.pickTime); // Return true if driver can arrive on time
     }
+    
+    public int totalRequestsDone(List<Driver> driverList) {
+    	int total = 0;
+		//print out the schedule for each driver
+		for (int i=0; i<driverList.size(); i++) {
+			//System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
+			total += driverList.get(i).schedule.size();
+		}
+		return total;
+    }
 
     public static void main(String[] args) {
         List<Request> requestList = Request.createRequests(75);

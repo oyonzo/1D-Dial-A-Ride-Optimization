@@ -13,13 +13,11 @@ public class MinFValue {
         Map<Request, Driver> assignedDrivers = new HashMap<>();
         List<Request> unassignedRequests = new ArrayList<>(requestList);
 
-        // Step 1: Sort the requests in increasing order of function f
-        Collections.sort(requestList, Comparator.comparingDouble(request -> request.f_val));
 
-        // Step 3: Assign each driver the (at most) n/k requests with the closest pickup locations
+        // Step 1: Assign each driver the (at most) n/k requests with the closest pickup locations
         assignClosestRequests(driverList, unassignedRequests, n/k, assignedDrivers);
 
-        // Step 4: For any unassigned request, find the closest driver and assign
+        // Step 2: For any unassigned request, find the closest driver and assign
         Iterator<Request> iterator = unassignedRequests.iterator();
         while (iterator.hasNext()) {
             Request r = iterator.next();
@@ -30,24 +28,88 @@ public class MinFValue {
             }
         }
 
-        // Step 5: For any request assigned to more than one driver, assign to the closest driver
+        // Step 3: For any request assigned to more than one driver, assign to the closest driver
         // Not necessary as we are assigning only one driver to each request
 
-        // Step 6: For each request in Request-List
+        // Step 4: For each request in Request-List
         for (Request e : requestList) {
             Driver d = assignedDrivers.get(e);
-
-            if (d != null) { // If a driver is assigned
-                // If pickup time hasn't passed and there's enough time to drive from current location
-                if (e.pickTime > d.getCurrentTime() && enoughTimeToDrive(d, e)) {
-                    // Add request to driver's schedule
-                    d.schedule.add(e);
-                    // Update driver's current location to request's drop-off location
-                    d.setPosition(e.finishPos);
-                    d.setCurrentTime(e.finishTime);
-                }
+            if (d != null) {
+            	d.initialSchedule.add(e);
             }
         }
+        
+        for (Driver d : driverList) {
+        	for (Request r : d.initialSchedule) {
+        		r.setf(0, 4, 1, d.initialSchedule, d);
+        	}
+        	Collections.sort(d.initialSchedule, Comparator.comparingDouble(request -> request.f_val));
+        }
+        
+       for (Driver d : driverList) {
+    	   for (Request r : d.initialSchedule) {
+             if (r.pickTime > d.getCurrentTime() && enoughTimeToDrive(d, r)) {
+	             // Add request to driver's schedule
+	             d.schedule.add(r);
+	             // Update driver's current location to request's drop-off location
+	             d.setPosition(r.finishPos);
+	             d.setCurrentTime(r.finishTime);
+             }
+    	   }
+       }
+    }
+    
+    public void minFValue(int w1, int w2, int w3, List<Request> requestList, List<Driver> driverList) {
+        int n = requestList.size();
+        int k = driverList.size();
+
+        Map<Request, Driver> assignedDrivers = new HashMap<>();
+        List<Request> unassignedRequests = new ArrayList<>(requestList);
+
+
+        // Step 1: Assign each driver the (at most) n/k requests with the closest pickup locations
+        assignClosestRequests(driverList, unassignedRequests, n/k, assignedDrivers);
+
+        // Step 2: For any unassigned request, find the closest driver and assign
+        Iterator<Request> iterator = unassignedRequests.iterator();
+        while (iterator.hasNext()) {
+            Request r = iterator.next();
+            Driver closestDriver = findClosestDriver(driverList, r, n/k + THRESHOLD);
+            if (closestDriver != null) {
+                assignedDrivers.put(r, closestDriver);
+                iterator.remove();  // Safe removal using iterator
+            }
+        }
+
+        // Step 3: For any request assigned to more than one driver, assign to the closest driver
+        // Not necessary as we are assigning only one driver to each request
+
+        // Step 4: For each request in Request-List
+        for (Request e : requestList) {
+            Driver d = assignedDrivers.get(e);
+            if (d != null) {
+            	d.initialSchedule.add(e);
+            }
+        }
+        
+        for (Driver d : driverList) {
+        	for (Request r : d.initialSchedule) {
+        		r.setf(w1, w2, w3, d.initialSchedule, d);
+        	}
+        	Collections.sort(d.initialSchedule, Comparator.comparingDouble(request -> request.f_val));
+        }
+        
+       for (Driver d : driverList) {
+    	   for (Request r : d.initialSchedule) {
+             if (r.pickTime > d.getCurrentTime() && enoughTimeToDrive(d, r)) {
+	             // Add request to driver's schedule
+	             d.schedule.add(r);
+	             // Update driver's current location to request's drop-off location
+	             d.setPosition(r.finishPos);
+	             d.setCurrentTime(r.finishTime);
+             }
+    	   }
+       }
     }
 
     

@@ -47,7 +47,11 @@ public class Request implements Comparable<Request> {
 	// f= w1x1 * w2x2 * w3x3
 	// we have the best weights found, which are 0, 4 or 5, 1
 	public void setf(List<Request> rl) {
-		f_val = 0 * this.getX1() + 5 * this.getX2() + 1 * this.getX3(rl);
+		f_val = 0 * this.getX1() + 5 * this.getX2() + 500 * this.getX3(rl);
+	}
+	
+	public void setf(int w1, int w2, int w3, List<Request> rl, Driver d) {
+		f_val = w1 * this.getX1(d) + w2 * this.getX2() + w3 * this.getX3(rl);
 	}
 
 	public double getX1() {
@@ -55,6 +59,10 @@ public class Request implements Comparable<Request> {
 		origin[0] = 0;
 		origin[1] = 0;
 		return Graph.dist(origin, this.startPos);
+	}
+	
+	public double getX1(Driver d) {
+		return Graph.dist(d.getPosition(), this.startPos);
 	}
 
 	public double getX2() {

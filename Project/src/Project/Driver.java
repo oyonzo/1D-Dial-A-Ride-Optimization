@@ -8,7 +8,8 @@ import java.util.Random;
 import Optimal.newnewMain;
 
 public class Driver extends Graph {
-    List<Request> schedule;
+    public List<Request> schedule;
+    public List<Request> initialSchedule;
     private double[] position;
     private static int speed = 1;
     private double currentTime = 0;
@@ -16,6 +17,7 @@ public class Driver extends Graph {
 
     public Driver(double[] position) {
         this.schedule = new ArrayList<>();
+        this.initialSchedule = new ArrayList<>();
         this.position = position;
     }
 
