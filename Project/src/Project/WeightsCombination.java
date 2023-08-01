@@ -66,6 +66,7 @@ public class WeightsCombination {
 			}
 		}
 		
+		
 		System.out.println(bestRes);
 		System.out.println(bestWeights.size());
 		System.out.println();
