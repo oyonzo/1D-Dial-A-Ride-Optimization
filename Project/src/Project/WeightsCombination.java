@@ -2,7 +2,10 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class WeightsCombination {
@@ -18,13 +21,18 @@ public class WeightsCombination {
         System.out.print("How many drivers do you want: ");
         numDrivers = sc.nextInt();
         
-		int[] weightsCombo = new int[3];
 		MinFValue program = new MinFValue();
+		int bestRes=0;
+		//int[] bestWeights = new int[3];
 		
 		List<Request> requestList = Request.createRequests(numRequests);
 		List<Driver> driverList = Driver.generateRandDrivers(numDrivers);
-		List<Integer> res = new ArrayList<Integer> ();
+		Map<int[], Integer> result = new HashMap<>();
+		List<int[]> bestWeights = new ArrayList<>();
 		
+		
+		
+		// testing with all combos of weights. each weight is an integer in range 0-9
 		for (int i=0; i<10; i++) {
 			for (int j=0; j<10; j++) {
 				for (int k=0; k<10; k++) {
@@ -39,17 +47,31 @@ public class WeightsCombination {
 			       	    Driver dCopy = new Driver(d.getPosition());
 			       	    driverListCopy.add(dCopy);
 		       		}
-		       		
+		       		int[] weightsCombo = new int[3];
 					weightsCombo[0] = i;
 					weightsCombo[1] = j;
 					weightsCombo[2] = k;
-					program.minFValue(requestListCopy, driverListCopy);
-					//System.out.println(Arrays.toString(weightsCombo));
-					res.add(program.totalRequestsDone(driverListCopy));
+					program.minFValue(i, j, k,requestListCopy, driverListCopy);
+					int numCompleted = program.totalRequestsDone(driverListCopy);
+					result.put(weightsCombo, numCompleted);
+					if (numCompleted > bestRes) {
+						bestRes = numCompleted;
+					}	
 				}
 			}
 		}
-		System.out.println(res);
+		for (Entry<int[], Integer> entry : result.entrySet()) {
+			if (entry.getValue() == bestRes) {
+				bestWeights.add(entry.getKey());
+			}
+		}
+		
+		System.out.println(bestRes);
+		System.out.println(bestWeights.size());
+		System.out.println();
+		for (int[] c : bestWeights) {
+			System.out.print(Arrays.toString(c));
+		}
 	}
 
 }
