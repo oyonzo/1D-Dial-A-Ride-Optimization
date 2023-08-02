@@ -18,7 +18,7 @@ public class Simulation {
     public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("How mamy random requests do you want to have: ");
+        System.out.print("How many random requests do you want to have: ");
         numRequests = sc.nextInt();
 
         System.out.print("How many iterations do you want: ");
@@ -111,10 +111,6 @@ public class Simulation {
 	    	runLatest.latest(requestList3, driverList3);
 			resLatest.add(runLatest.totalRequestsDone(driverList3));
 			
-			//test shortest
-			Shortest runShortest = new Shortest();
-	    	runShortest.shortest(requestList4, driverList4);
-			resShortest.add(runShortest.totalRequestsDone(driverList4));
     		
     		
  

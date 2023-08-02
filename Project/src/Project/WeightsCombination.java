@@ -15,7 +15,7 @@ public class WeightsCombination {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
-        System.out.print("How mamy random requests do you want to have: ");
+        System.out.print("How many random requests do you want to have: ");
         numRequests = sc.nextInt();
 
         System.out.print("How many drivers do you want: ");
@@ -29,6 +29,10 @@ public class WeightsCombination {
 		List<Driver> driverList = Driver.generateRandDrivers(numDrivers);
 		Map<int[], Integer> result = new HashMap<>();
 		List<int[]> bestWeights = new ArrayList<>();
+		double first=0;
+		double second=0;
+		double third=0;
+		double[] average = new double[3];
 		
 		
 		
@@ -67,12 +71,28 @@ public class WeightsCombination {
 		}
 		
 		
-		System.out.println(bestRes);
-		System.out.println(bestWeights.size());
-		System.out.println();
 		for (int[] c : bestWeights) {
-			System.out.print(Arrays.toString(c));
+			first += c[0];
+			second += c[1];
+			third += c[2];
 		}
+		
+		average[0] = first/((double) bestWeights.size());
+		average[1] = second/((double) bestWeights.size());
+		average[2] = third/((double) bestWeights.size());
+		
+		
+//		System.out.println(requestList);
+//		System.out.println(driverList);
+		System.out.println("Number of requests completed: " + bestRes);
+		System.out.println("Number of best weight combos: " + bestWeights.size());
+		System.out.println();
+//		System.out.println("Best weight combos: ");
+//		for (int[] c : bestWeights) {
+//			System.out.print(Arrays.toString(c));
+//		}
+		System.out.println("Take the average:");
+		System.out.println(Arrays.toString(average));
 	}
 
 }

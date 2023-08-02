@@ -41,7 +41,7 @@ public class MinFValue {
         
         for (Driver d : driverList) {
         	for (Request r : d.initialSchedule) {
-        		r.setf(0, 4, 1, d.initialSchedule, d);
+        		r.setf(4, 5, 4, d.initialSchedule, d);
         	}
         	Collections.sort(d.initialSchedule, Comparator.comparingDouble(request -> request.f_val));
         }
