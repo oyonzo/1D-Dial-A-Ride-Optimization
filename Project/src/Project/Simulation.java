@@ -34,8 +34,6 @@ public class Simulation {
         List<Integer> resEarliest = new ArrayList<Integer> ();
         List<Integer> resMinF = new ArrayList<Integer> ();
         List<Integer> resLatest = new ArrayList<Integer> ();
-        List<Integer> resShortest = new ArrayList<Integer> ();
-        
         for (int i = 0; i < iterations; i++) {
         	// initialize the request list
             List<Request> requestList = Request.createRequests(numRequests);

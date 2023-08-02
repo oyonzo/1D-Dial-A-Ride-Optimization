@@ -27,7 +27,7 @@ public class MultiDriverSBP {
         // Loop to generate keys "r1", "r2", "r3", ...
         for (int i = 0; i <= rl.size(); i++) {
             Request request = rl.get(i);
-            if(map.containsKey(request){
+            if(map.containsKey(request)){
                 map.replace(request, map.get(request) + 1);
             }
             else{
@@ -56,7 +56,7 @@ public class MultiDriverSBP {
             }
             drivers.remove(largestDriver);
         }
-        assignReqeusts(drivers, requests);
+        assignRequests(drivers, requests);
     }
 
     // driver and finds the longest one and then removes the requests in the set as
