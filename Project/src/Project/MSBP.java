@@ -12,6 +12,7 @@ public class MSBP {
         int i = 1;
         double[][] positions = Graph.generateFixedList();
 		int segmentLength = findSegLength(positions);
+		f = TLIMIT / segmentLength;
         if (f % 2 == 1) {
             // at t1, do nothing
             i = 2;
