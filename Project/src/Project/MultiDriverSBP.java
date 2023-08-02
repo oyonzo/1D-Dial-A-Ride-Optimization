@@ -44,17 +44,21 @@ public class MultiDriverSBP {
         Driver largestDriver = null;
         List<Request> lrl = new ArrayList<Request>(requests.keySet());
         for (Driver d : drivers) {
-            List<Request> currSched = Driver.getOptimalforDriver(lrl, d)
+            List<Request> currSched = Driver.getOptimalforDriver(lrl, d);
             int currSchedSize = currSched.size();
             if (currSchedSize > largestSched) {
                 largestSched = currSchedSize;
                 largestDriver = d;
                 d.schedule = currSched;
             }
-
+            for (Request r : currSched) {
+                requests.remove(r);
+            }
+            drivers.remove(largestDriver);
         }
-        return ;
+        assignReqeusts(drivers, requests);
     }
+
     // driver and finds the longest one and then removes the requests in the set as
     // well as the driver
     // ^^ perhaps this would take a hashmap of requests and a list of drivers as its
