@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import Optimal.newnewMain;
 
 public class Driver extends Graph {
     public List<Request> schedule;
@@ -77,47 +76,7 @@ public class Driver extends Graph {
 
     // }
 
-    public static List<Request> getOptimalforDriver(List<Request> lrl, Driver driver) {
 
-        // gives us a list of list of requests, in every combination possible
-        Request.permute(lrl, 0);
-        // j is each set of requests
-        for (int j = 0; j < newnewMain.combinations.size(); j++) {
-            double time = 0;
-            // TODO think of what origins should be because we now have multiple drivers
-            // with different origins
-            double[] origin = driver.getPosition();
-            // i is a request in a set
-            for (int i = 0; i < newnewMain.combinations.get(j).size(); i++) {
-                if (newnewMain.combinations.get(j).get(i).pickTime < time) {
-                    newnewMain.combinations.get(j).remove(i);
-                    i--;
-                    continue;
-                }
-                if (time + Graph.dist(newnewMain.combinations.get(j).get(i).startPos, origin) > newnewMain.combinations
-                        .get(j)
-                        .get(i).pickTime) {
-                    newnewMain.combinations.get(j).remove(i);
-                    i--;
-                }
-                time = newnewMain.combinations.get(j).get(i).finishTime;
-                origin = newnewMain.combinations.get(j).get(i).finishPos;
-            }
-        }
-
-        int maxIndex = -1;
-        int maxSize = Integer.MIN_VALUE;
-
-        for (int i = 0; i < newnewMain.combinations.size(); i++) {
-            List<Request> l = newnewMain.combinations.get(i);
-            if (l.size() > maxSize) {
-                maxSize = l.size();
-                maxIndex = i;
-            }
-        }
-
-        return newnewMain.combinations.get(maxIndex);
-    }
     
     @Override
     public String toString() {

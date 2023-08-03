@@ -31,9 +31,9 @@ public class Simulation {
         
         
         // create two empty lists to keep track of the results of each iteration of the two algorithms 
-        List<Integer> resEarliest = new ArrayList<Integer> ();
+        List<Integer> resEarliestPickUp = new ArrayList<Integer> ();
         List<Integer> resMinF = new ArrayList<Integer> ();
-        List<Integer> resLatest = new ArrayList<Integer> ();
+        List<Integer> resEarliestDropOff = new ArrayList<Integer> ();
         for (int i = 0; i < iterations; i++) {
         	// initialize the request list
             List<Request> requestList = Request.createRequests(numRequests);
@@ -95,9 +95,9 @@ public class Simulation {
 	    	}
     		
 			//test earliest
-        	Earliest runEarliest = new Earliest();
-        	runEarliest.earliest(requestList1, driverList1);
-        	resEarliest.add(runEarliest.totalRequestsDone(driverList1));
+        	EarliestPickUp runEarliestPickUp = new EarliestPickUp();
+        	runEarliestPickUp.earliestPickUp(requestList1, driverList1);
+        	resEarliestPickUp.add(runEarliestPickUp.totalRequestsDone(driverList1));
     		
     		// test minFValue
 	    	MinFValue runMinF = new MinFValue();
@@ -105,9 +105,9 @@ public class Simulation {
 			resMinF.add(runMinF.totalRequestsDone(driverList2));
     		
     		//test latest
-			Latest runLatest = new Latest();
-	    	runLatest.latest(requestList3, driverList3);
-			resLatest.add(runLatest.totalRequestsDone(driverList3));
+			EarliestDropOff runEarliestDropOff = new EarliestDropOff();
+			runEarliestDropOff.earliestDropOff(requestList3, driverList3);
+			resEarliestDropOff.add(runEarliestDropOff.totalRequestsDone(driverList3));
 			
     		
     		
@@ -117,7 +117,7 @@ public class Simulation {
             
         }
         //System.out.println(resEarliest);
-        double average1 = resEarliest.stream().mapToInt(i -> i).average().getAsDouble();
+        double average1 = resEarliestPickUp.stream().mapToInt(i -> i).average().getAsDouble();
         System.out.println("The average for earliest is: " + average1);
 
         //System.out.println(resMinF);
@@ -125,8 +125,8 @@ public class Simulation {
         System.out.println("The average for MinF is: " + average2);
         
         //System.out.println(resLatest);
-        double average3 = resLatest.stream().mapToInt(i -> i).average().getAsDouble();
-        System.out.println("The average for latest is: " + average3);
+        double average3 = resEarliestDropOff.stream().mapToInt(i -> i).average().getAsDouble();
+        System.out.println("The average for earliestDropOff is: " + average3);
         
 //        System.out.println(resShortest);
 //        double average4 = resShortest.stream().mapToInt(i -> i).average().getAsDouble();

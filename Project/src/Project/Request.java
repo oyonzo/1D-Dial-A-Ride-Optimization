@@ -3,7 +3,6 @@ package Project;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import Optimal.newnewMain;
 
 /*
  * Request class, for creating a request from data
@@ -108,28 +107,8 @@ public class Request implements Comparable<Request> {
 				+ "f-value: " + f_val;
 	}
 
-	// make a list of lists of requests in every possible permutation
-	public static void permute(List<Request> lrl, int k) {
-		if (k == lrl.size()) {
-			ArrayList<Request> indivSeq = new ArrayList<Request>();
-			for (int i = 0; i < lrl.size(); i++) {
-				indivSeq.add(lrl.get(i));
-				// System.out.print(" [" + lrl.get(i).toString() + "] ");
 
-			}
-			newnewMain.combinations.add(newnewMain.index, indivSeq);
-			newnewMain.index++;
-			// System.out.println();
-		} else {
-			// recursively swapping one thing each time
-			for (int i = k; i < lrl.size(); i++) {
-				Collections.swap(lrl, i, k);
-				permute(lrl, k + 1);
-				Collections.swap(lrl, i, k);
-			}
-		}
 
-	}
 
 	/*
 	 * Generates a random request in the metric space

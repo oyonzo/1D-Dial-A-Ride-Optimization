@@ -2,10 +2,10 @@ package Project;
 
 import java.util.*;
 
-public class Latest {
+public class EarliestDropOff {
     private static final int THRESHOLD = 1;
 
-    public void latest(List<Request> requestList, List<Driver> driverList) {
+    public void earliestDropOff(List<Request> requestList, List<Driver> driverList) {
         int n = requestList.size();
         int k = driverList.size();
 
@@ -115,8 +115,8 @@ public class Latest {
             System.out.println(Arrays.toString(d.getPosition()));
         }
 
-        Latest program = new Latest();
-        program.latest(requestList, driverList);
+        EarliestDropOff program = new EarliestDropOff();
+        program.earliestDropOff(requestList, driverList);
         int total = 0;
         // print out the schedule for each driver
         for (int i = 0; i < driverList.size(); i++) {

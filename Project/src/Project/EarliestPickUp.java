@@ -2,10 +2,10 @@ package Project;
 
 import java.util.*;
 
-public class Earliest {
+public class EarliestPickUp {
     private static final int THRESHOLD = 1;
 
-    public void earliest(List<Request> requestList, List<Driver> driverList) {
+    public void earliestPickUp(List<Request> requestList, List<Driver> driverList) {
         int n = requestList.size();
         int k = driverList.size();
 
@@ -201,8 +201,8 @@ public class Earliest {
 			System.out.println(Arrays.toString(d.getPosition()));
 		}
 		
-		Earliest program = new Earliest();
-		program.earliest(requestList, driverList);
+		EarliestPickUp program = new EarliestPickUp();
+		program.earliestPickUp(requestList, driverList);
 		
 		
 		System.out.println(program.totalRequestsDone(driverList));
