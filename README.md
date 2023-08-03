@@ -1,3 +1,16 @@
-# 1D-Dial-A-Ride-Optimization
+#2D-MULTI-DRIVER-DIAL-A-RIDE-OPTIMIZATION
 
-Efficient routing algorithms that optimize service and minimize drivers across a 1D plane. Other features (rideshare, dynamic pickup times, busroutes) have also been accounted for. The 2D version has since been implemented in a Dial a Ride Website for the Vermont department of transportation.
+Algorithms to optimize Dial-A-Ride operations with multiple drivers in a 2-Dimensional space.
+
+newnewMain - this is what we have been using in the Summer of 2023 to test our algorithms.
+
+Algorithms:
+Earliest- requests sorted on earliest pickup time
+MinF - requests sorted by Min F value
+Latest - requests sorted by earliest drop off time (similar to activity selection)
+MSBP - the furthest we got on our multi-driver segmented best path algorithm
+
+Classes:
+Graph
+Driver
+Request
