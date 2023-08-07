@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-
 public class Driver extends Graph {
     public List<Request> schedule;
-    public List<Request> initialSchedule;
+    public List<Request> initialSchedule; // For use in MinFValue
     private double[] position;
-    private static int speed = 1;
+    // private static int speed = 1;
     private double currentTime = 0;
-    public static double[][] locations = Graph.generateFixedList();
+    public static double[][] locations = Graph.generateFixedList(); // Hardcoded list of possible locations (see
+                                                                    // Graph.java)
 
     public Driver(double[] position) {
         this.schedule = new ArrayList<>();
@@ -21,14 +21,15 @@ public class Driver extends Graph {
     }
 
     public void clearSchedule() {
-    	this.schedule.clear();
+        this.schedule.clear();
     }
+
     /**
      * @return creates a driver at a random location
      */
     public static Driver newRandDriver() {
-    	Random rand = new Random();
-    	int index = rand.nextInt(20);
+        Random rand = new Random();
+        int index = rand.nextInt(20);
         Driver d = new Driver(locations[index]);
         return d;
     }
@@ -40,10 +41,10 @@ public class Driver extends Graph {
     public static List<Driver> generateRandDrivers(int numDrivers) {
         List<Driver> drivers = new ArrayList<Driver>();
 
-            for(int i = 0; i < numDrivers; i++){
-                drivers.add(newRandDriver());
-            }
-            return drivers;
+        for (int i = 0; i < numDrivers; i++) {
+            drivers.add(newRandDriver());
+        }
+        return drivers;
     }
 
     public double getCurrentTime() {
@@ -76,11 +77,9 @@ public class Driver extends Graph {
 
     // }
 
-
-    
     @Override
     public String toString() {
-    	return "Position" + Arrays.toString(this.getPosition());
+        return "Position" + Arrays.toString(this.getPosition());
     }
 
     public static void main(String[] args) {
