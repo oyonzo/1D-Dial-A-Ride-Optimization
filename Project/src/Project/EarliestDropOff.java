@@ -6,6 +6,7 @@ public class EarliestDropOff {
     private static final int THRESHOLD = 1;
 
     public void earliestDropOff(List<Request> requestList, List<Driver> driverList) {
+        // set n to the number of requests and k to the number of drivers
         int n = requestList.size();
         int k = driverList.size();
 
@@ -96,17 +97,18 @@ public class EarliestDropOff {
         double drivingTime = Graph.dist(d.getPosition(), r.startPos) / 1; // Calculate driving time
         return (d.getCurrentTime() + drivingTime <= r.pickTime); // Return true if driver can arrive on time
     }
-    
+
     public int totalRequestsDone(List<Driver> driverList) {
-    	int total = 0;
-		//print out the schedule for each driver
-		for (int i=0; i<driverList.size(); i++) {
-			//System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
-			total += driverList.get(i).schedule.size();
-		}
-		return total;
+        int total = 0;
+        // print out the schedule for each driver
+        for (int i = 0; i < driverList.size(); i++) {
+            // System.out.println("Driver"+ (i+1)+": " + driverList.get(i).schedule);
+            total += driverList.get(i).schedule.size();
+        }
+        return total;
     }
 
+    // tests the algorithm with random requests and drivers
     public static void main(String[] args) {
         List<Request> requestList = Request.createRequests(75);
         List<Driver> driverList = Driver.generateRandDrivers(15);
@@ -136,4 +138,3 @@ public class EarliestDropOff {
         }
     }
 }
-

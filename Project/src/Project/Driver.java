@@ -8,7 +8,7 @@ import java.util.Random;
 public class Driver extends Graph {
     public List<Request> schedule;
     public List<Request> initialSchedule; // For use in MinFValue
-    private double[] position;
+    private double[] position; // the coordinates of the driver
     // private static int speed = 1;
     private double currentTime = 0;
     public static double[][] locations = Graph.generateFixedList(); // Hardcoded list of possible locations (see
@@ -63,30 +63,8 @@ public class Driver extends Graph {
         this.position = new_position;
     }
 
-    // public static double[] generateRandomPosition() {
-    // double[] res = new double[2];
-    // Random rand = new Random();
-
-    // double x = rand.nextDouble(100); // Generate first double
-    // double y = rand.nextDouble(100);
-
-    // res[0] = x;
-    // res[1] = y;
-
-    // return res;
-
-    // }
-
     @Override
     public String toString() {
         return "Position" + Arrays.toString(this.getPosition());
-    }
-
-    public static void main(String[] args) {
-        double[] origin = new double[2];
-        origin[0] = 0;
-        origin[1] = 0;
-        Driver test = new Driver(origin);
-        System.out.println(Arrays.toString(Graph.randPoint()));
     }
 }
