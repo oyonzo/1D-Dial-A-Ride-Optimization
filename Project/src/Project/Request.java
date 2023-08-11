@@ -37,18 +37,13 @@ public class Request implements Comparable<Request> {
 		return rweight;
 	}
 
-	// // calculating the distance between two points
-	// public double dist(double[] a, double[] b) {
-	// double sum = Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2);
-	// return Math.sqrt(sum);
-	// }
-
 	// f= w1x1 * w2x2 * w3x3
-	// we have the best weights found, which are 0, 4 or 5, 1
+	// we have the best weights found, which are 4,5,4
 	public void setf(List<Request> rl) {
 		f_val = 0 * this.getX1() + 5 * this.getX2() + 500 * this.getX3(rl);
 	}
 	
+	// sets weights for MinFValue
 	public void setf(int w1, int w2, int w3, List<Request> rl, Driver d) {
 		f_val = w1 * this.getX1(d) + w2 * this.getX2() + w3 * this.getX3(rl);
 	}
@@ -82,6 +77,10 @@ public class Request implements Comparable<Request> {
 		return min;
 	}
 
+	/**
+	 * @param a request
+	 * @return true if it's the same request
+	 */
 	public boolean equals(Request r) {
 		if (this.startPos == r.startPos && this.finishPos == r.startPos && this.pickTime == r.pickTime)
 			return true;
