@@ -2,6 +2,10 @@
 
 Algorithms to optimize Dial-A-Ride operations with multiple drivers in a 2-Dimensional space.
 
+A quick summary of this project can be found here: https://drive.google.com/file/d/1kU6srgm4wXbBzQC8KtPu1BZ_C9DPZOgh/view?usp=sharing
+
+A more detailed final report of this project can be found here: https://docs.google.com/document/d/1HG4BfCG4YzMCN69pZmlEUV0qOmZbThrSuBIE5IHiCxA/edit?usp=sharing
+
 Simulation - this is what we have been using in the Summer of 2023 to test our algorithms.
 
 WeightsCombination - used for finding the weights for MinFValue
